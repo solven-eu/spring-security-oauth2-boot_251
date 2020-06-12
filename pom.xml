@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>io.mitrust</groupId>
+	<artifactId>spring-security-oauth2-boot</artifactId>
+	<version>2.3.0.RELEASE</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+			<version>2.3.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth.boot</groupId>
+			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+			<version>2.3.0.RELEASE</version>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<!-- https://www.mojohaus.org/extra-enforcer-rules/banDuplicateClasses.html -->
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>extra-enforcer-rules</artifactId>
+						<version>1.2</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>enforce</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<failFast>true</failFast>
+							<!-- https://maven.apache.org/enforcer/enforcer-rules/index.html -->
+							<rules>
+								<banDuplicateClasses>
+									<!-- https://www.mojohaus.org/extra-enforcer-rules/banDuplicateClasses.html -->
+									<ignoreClasses>
+										<!-- org.springframework:spring-aop -->
+										<!-- aopalliance:aopalliance: -->
+										<ignoreClass>org/aopalliance.*</ignoreClass>
+									</ignoreClasses>
+									<scopes>
+										<scope>compile</scope>
+										<scope>provided</scope>
+									</scopes>
+									<findAllDuplicates>true</findAllDuplicates>
+									<ignoreWhenIdentical>true</ignoreWhenIdentical>
+								</banDuplicateClasses>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
